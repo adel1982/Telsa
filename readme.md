@@ -1,4 +1,4 @@
 # Configurator Tesla Y
-Interface utilisateur pour personnaliser une Tesla Model Y. Modifiez l'extérieur, l'intérieur et les roues. Ajoutez différentes options et obtenez des prix.
+UI de customization d'une Tesla Model Y. Modifiez l'extérieur, l'intérieur et les roues.
 
-<img src="./images/screen.jpg" />
+<img src="./img/screen.jpg" />
