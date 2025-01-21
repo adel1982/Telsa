@@ -3,6 +3,14 @@ const exteriorColorSection = document.querySelector('#exterior-buttons');
 const interiorColorSection = document.querySelector('#interior-buttons');
 const exteriorImage = document.querySelector('#exterior-image');
 const interiorImage = document.querySelector('#interior-image');
+const wheelButtonsSection = document.querySelector('#wheel-buttons');
+
+let selectedColor = 'Stealth Grey';
+const selectedOptions = {
+    'Performance Wheels': false,
+    'Performance Package': false,
+    'Full Self-Drving': false,
+};
 
 // Handle Top Bar on Scroll
 const handleScroll = () => {
@@ -55,7 +63,30 @@ const handleColorButtonClick = (event) => {
     }
 }
 
+// Upadate exterior image based on color and wheels
+const updateExteriorImage = () => {
+    const performanceSuffix = selectedOptions['Performance Wheels'] ? '-performance' : ''
+    const colorKey = selectedColor in exteriorImages ? selectedColor : 'Stealth Grey';
+    exteriorImage.src = exteriorImages[colorKey].replace('.jpg', `${performanceSuffix}.jpg` )
+}
+
+// Wheel Selection
+const handleWheelButtonClick = (event) => {
+    if (event.target.tagName === 'BUTTON') {
+        const buttons = document.querySelectorAll('#wheel-buttons button');
+        buttons.forEach((btn) => btn.classList.remove('bg-gray-700','text-white'));
+
+        // Add selected styles to clicked button
+        event.target.classList.add('bg-gray-700', 'text-white');
+
+        const selectedWheel = event.target.textContent.includes('Performances');
+
+        exteriorImage.src = selectedWheel ? '../img/model/model-y-stealth-grey-performance.jpg' : '../img/model/model-y-stealth-grey.jpg'
+    }
+}
+
 // Event Listeners
 window.addEventListener('scroll', () => requestAnimationFrame(handleScroll))
 exteriorColorSection.addEventListener('click', handleColorButtonClick)
 interiorColorSection.addEventListener('click', handleColorButtonClick)
+wheelButtonsSection.addEventListener('click', handleWheelButtonClick)
