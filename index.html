@@ -95,9 +95,14 @@
           <!-- FULL SELF DRIVING OPTION -->
            <div class="border p-4 mb-8 rounded-lg shadow">
             <h3 class="font-semibold mb-2">Full Self-Driving</h3>
-            <label class="flex items-center space-x-3">
-              <input type="checkbox" id="full-self-driving-checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-              <span>Add full Self-Driving for $8500 </span>
+            <label class="flex items-center">
+              <span class="flex-1">
+                Add full Self-Driving
+              </span>
+              <span class="flex item-center justify-end">
+                <span class="flex item-center">$8500</span>
+                <input type="checkbox" id="full-self-driving-checkbox" class="form-checkbox h-5 w-5 ml-2 text-blue-600 space-x-2">
+              </span>
             </label>
            </div>
 
@@ -155,26 +160,31 @@
             </div>
 
             <!-- TOTAL PRICE SECTION -->
-            <div class="pt-4 flex">
-              <h3 class="font-semibold text-lg">Total Price</h3>
-              <p id="total-price" class="text-2xl font-bold">$52,490</p>
+            <div class="flex">
+              <h3 class="font-semibold text-lg flex-1">Total Price</h3>
+              <p id="total-price" class="text-3xl font-bold">$52,490</p>
             </div>
 
             <!-- PAYMENT INFO SECTION -->
             <div class="border-t pt-4 mt-6">
               <h3 class="font-semibold text-lg">Estimated Payment Breakdown</h3>
               <div class="mt-4">
-                <p>
-                  Down Payment:
+                <p class="flex">
+                  <span class="flex-1">Down Payment:</span>
                   <span id="down-payment" class="font-bold">$7,000</span>
                 </p>
-                <p>Loan Term: <span class="font-bold">60 months</span></p>
-                <p>Interest Rate: <span class="font-bold">3% APR</span></p>
-                <p>
-                  Estimated Monthly Payment:
+                <p class="flex">
+                  <span class="flex-1">Loan Term:</span>
+                  <span class="font-bold">60 months</span>
+                </p>
+                <p class="flex">
+                  <span class="flex-1">Interest Rate:</span> 
+                  <span class="font-bold">3% APR</span>
+                </p>
+                <p class="flex items-center">
+                  <span class="flex-1 font-bold">Estimated Monthly Payment:</span>
                   <span id="monthly-payment" class="text-2xl font-bold"
-                    >$818.65</span
-                  >
+                    >$818.65</span>
                 </p>
               </div>
             </div>
