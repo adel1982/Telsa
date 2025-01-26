@@ -25,7 +25,10 @@ const handleColorButtonClick = (event) => {
 
         if (event.currentTarget === interiorColorSection) {
             const color = button.querySelector('img').alt;
-            interiorImage.src = interiorImages[color];
+            const { src, alt, ariaLabel } = interiorImages[color]; 
+            interiorImage.src = src;
+            interiorImage.alt = alt;
+            interiorImage.setAttribute("aria-label", ariaLabel);
         }
     }
 };
@@ -33,8 +36,13 @@ const handleColorButtonClick = (event) => {
 const updateExteriorImage = () => {
     const performanceSuffix = selectedOptions['Performance Wheels'] ? '-performance' : '';
     const colorKey = selectedColor in exteriorImages ? selectedColor : 'Stealth Grey';
-    exteriorImage.src = exteriorImages[colorKey].replace('.jpg', `${performanceSuffix}.jpg`);
+
+    const { src, alt, ariaLabel } = exteriorImages[colorKey]; // Extraction des données
+    exteriorImage.src = src.replace('.jpg', `${performanceSuffix}.jpg`); // Appliquer le suffixe
+    exteriorImage.alt = alt;
+    exteriorImage.setAttribute("aria-label", ariaLabel);
 };
+
 
 const handleWheelButtonClick = (event) => {
     if (event.target.tagName === 'BUTTON') {
@@ -59,16 +67,29 @@ const handlePerformanceButtonClick = () => {
 
 const fullSelfDrivingChange = () => {
     selectedOptions['Full Self-Driving'] = fullSelfDrivingCheckbox.checked;
+    fullSelfDrivingCheckbox.setAttribute("aria-checked", fullSelfDrivingCheckbox.checked ? "true" : "false"); 
     updateTotalPrice();
 };
 
 export const initializeEventListeners = () => {
     window.addEventListener('scroll', () => requestAnimationFrame(handleScroll));
+
     exteriorColorSection.addEventListener('click', handleColorButtonClick);
     interiorColorSection.addEventListener('click', handleColorButtonClick);
     wheelButtonsSection.addEventListener('click', handleWheelButtonClick);
-    performanceBtn.addEventListener('click', handlePerformanceButtonClick);
+
+    performanceBtn.addEventListener('click', () => {
+        const isSelected = performanceBtn.classList.toggle("btn-selected");
+        performanceBtn.setAttribute("aria-pressed", isSelected ? "true" : "false"); 
+        handlePerformanceButtonClick();
+    });
+
     fullSelfDrivingCheckbox.addEventListener('change', fullSelfDrivingChange);
 
-    accessoryCheckboxes.forEach(checkbox => checkbox.addEventListener('change', updateTotalPrice));
+    accessoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            checkbox.setAttribute("aria-checked", checkbox.checked ? "true" : "false"); 
+            updateTotalPrice();
+        });
+    });
 };

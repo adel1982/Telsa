@@ -10,6 +10,10 @@ export let selectedOptions = {
     'Full Self-Driving': false,
 };
 
+totalPriceElement.setAttribute("aria-live", "polite");
+downPaymentElement.setAttribute("aria-live", "polite");
+monthlyPaymentElement.setAttribute("aria-live", "polite");
+
 export const updateTotalPrice = () => {
     currentPrice = basePrice;
 
@@ -21,7 +25,12 @@ export const updateTotalPrice = () => {
         const accessoryLabel = checkbox.closest('label').querySelector('span').textContent.trim();
         const accessoryPrice = pricing['Accessories'][accessoryLabel];
 
-        if (checkbox.checked) currentPrice += accessoryPrice;
+        if (checkbox.checked) {
+            currentPrice += accessoryPrice;
+            checkbox.setAttribute("aria-checked", "true"); 
+        } else {
+            checkbox.setAttribute("aria-checked", "false");
+        }
     });
 
     totalPriceElement.textContent = formatPrice(currentPrice);
