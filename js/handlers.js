@@ -1,4 +1,9 @@
-import { exteriorImage, interiorImage, exteriorColorSection, interiorColorSection, wheelButtonsSection, performanceBtn, fullSelfDrivingCheckbox, accessoryCheckboxes, topBar } from './const.js';
+import { 
+    exteriorImage, interiorImage, exteriorColorSection, 
+    interiorColorSection, wheelButtonsSection, performanceBtn, 
+    fullSelfDrivingCheckbox, accessoryCheckboxes, topBar 
+} from './const.js';
+
 import { exteriorImages, interiorImages } from './mapping.js';
 import { selectedOptions, updateTotalPrice } from './priceCalculator.js';
 
@@ -11,20 +16,20 @@ const handleScroll = () => {
 };
 
 const handleColorButtonClick = (event) => {
-    let button = event.target.tagName === 'IMG' ? event.target.closest('button') : event.target;
+    let button = event.target.closest('button');
 
-    if (button) {
-        const buttons = event.currentTarget.querySelectorAll('button');
-        buttons.forEach(btn => btn.classList.remove('btn-selected'));
-        button.classList.add('btn-selected');
+    if (!button) return;
 
-        if (event.currentTarget === exteriorColorSection) {
-            selectedColor = button.querySelector('img').alt;
-            updateExteriorImage();
-        }
+    const buttons = event.currentTarget.querySelectorAll('button');
+    buttons.forEach(btn => btn.classList.remove('btn-selected'));
+    button.classList.add('btn-selected');
 
-        if (event.currentTarget === interiorColorSection) {
-            const color = button.querySelector('img').alt;
+    if (event.currentTarget === exteriorColorSection) {
+        selectedColor = button.querySelector('img').alt;
+        updateExteriorImage();
+    } else if (event.currentTarget === interiorColorSection) {
+        const color = button.querySelector('img').alt;
+        if (interiorImages[color]) {
             const { src, alt, ariaLabel } = interiorImages[color]; 
             interiorImage.src = src;
             interiorImage.alt = alt;
@@ -35,26 +40,27 @@ const handleColorButtonClick = (event) => {
 
 const updateExteriorImage = () => {
     const performanceSuffix = selectedOptions['Performance Wheels'] ? '-performance' : '';
-    const colorKey = selectedColor in exteriorImages ? selectedColor : 'Stealth Grey';
+    const colorKey = exteriorImages[selectedColor] ? selectedColor : 'Stealth Grey';
 
-    const { src, alt, ariaLabel } = exteriorImages[colorKey]; // Extraction des données
-    exteriorImage.src = src.replace('.jpg', `${performanceSuffix}.jpg`); // Appliquer le suffixe
-    exteriorImage.alt = alt;
-    exteriorImage.setAttribute("aria-label", ariaLabel);
+    if (exteriorImages[colorKey]) {
+        const { src, alt, ariaLabel } = exteriorImages[colorKey];
+        exteriorImage.src = src.replace('.jpg', `${performanceSuffix}.jpg`);
+        exteriorImage.alt = alt;
+        exteriorImage.setAttribute("aria-label", ariaLabel);
+    }
 };
 
-
 const handleWheelButtonClick = (event) => {
-    if (event.target.tagName === 'BUTTON') {
-        const buttons = document.querySelectorAll('#wheel-buttons button');
-        buttons.forEach(btn => btn.classList.remove('bg-gray-700', 'text-white'));
+    if (event.target.tagName !== 'BUTTON') return;
 
-        event.target.classList.add('bg-gray-700', 'text-white');
-        selectedOptions['Performance Wheels'] = event.target.textContent.includes('Performance');
+    const buttons = document.querySelectorAll('#wheel-buttons button');
+    buttons.forEach(btn => btn.classList.remove('bg-gray-700', 'text-white'));
 
-        updateExteriorImage();
-        updateTotalPrice();
-    }
+    event.target.classList.add('bg-gray-700', 'text-white');
+    selectedOptions['Performance Wheels'] = event.target.textContent.includes('Performance');
+
+    updateExteriorImage();
+    updateTotalPrice();
 };
 
 const handlePerformanceButtonClick = () => {
@@ -68,6 +74,22 @@ const handlePerformanceButtonClick = () => {
 const fullSelfDrivingChange = () => {
     selectedOptions['Full Self-Driving'] = fullSelfDrivingCheckbox.checked;
     fullSelfDrivingCheckbox.setAttribute("aria-checked", fullSelfDrivingCheckbox.checked ? "true" : "false"); 
+    updateTotalPrice();
+};
+
+// ✅ Correction des checkboxes accessoires pour s'assurer qu'elles fonctionnent bien
+const handleAccessoryCheckboxChange = (event) => {
+    const checkbox = event.currentTarget;
+    if (!checkbox) return;
+
+    checkbox.setAttribute("aria-checked", checkbox.checked ? "true" : "false"); 
+
+    // 🔥 Mise à jour de l'affichage du SVG (coché/décoché)
+    const svgCheck = checkbox.closest('.label-cbx').querySelector('.checkbox svg');
+    if (svgCheck) {
+        svgCheck.classList.toggle('hidden', !checkbox.checked);
+    }
+
     updateTotalPrice();
 };
 
@@ -86,10 +108,8 @@ export const initializeEventListeners = () => {
 
     fullSelfDrivingCheckbox.addEventListener('change', fullSelfDrivingChange);
 
+    // ✅ Correction : Ajout d'un event listener correct pour chaque checkbox
     accessoryCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            checkbox.setAttribute("aria-checked", checkbox.checked ? "true" : "false"); 
-            updateTotalPrice();
-        });
+        checkbox.addEventListener('change', handleAccessoryCheckboxChange);
     });
 };
