@@ -107,8 +107,7 @@ export const initializeEventListeners = () => {
     });
 
     fullSelfDrivingCheckbox.addEventListener('change', fullSelfDrivingChange);
-
-    // ✅ Correction : Ajout d'un event listener correct pour chaque checkbox
+    
     accessoryCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', handleAccessoryCheckboxChange);
     });

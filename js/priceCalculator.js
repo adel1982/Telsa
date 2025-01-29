@@ -6,9 +6,9 @@ const formatPrice = (price) => `$${price.toLocaleString()}`;
 let currentPrice = basePrice;
 
 export let selectedOptions = {
-    'Performance Wheels': false,
-    'Performance Package': false,
-    'Full Self-Driving': false,
+    'Modèle Performance': false,
+    'Performance Plus': false,
+    'Ajouter la conduite autonome': false,
 };
 
 // Ajout de l'attribut aria-live pour améliorer l'accessibilité
@@ -20,15 +20,14 @@ export const updateTotalPrice = () => {
     currentPrice = basePrice;
 
     // Ajout des options Performance & Self-Driving
-    if (selectedOptions['Performance Wheels']) currentPrice += pricing['Performance Wheels'];
-    if (selectedOptions['Performance Package']) currentPrice += pricing['Performance Package'];
-    if (selectedOptions['Full Self-Driving']) currentPrice += pricing['Full Self-Driving'];
+    if (selectedOptions['Modèle Performance']) currentPrice += pricing['Modèle Performance'];
+    if (selectedOptions['Performance Plus']) currentPrice += pricing['Performance Plus'];
+    if (selectedOptions['Ajouter la conduite autonome']) currentPrice += pricing['Ajouter la conduite autonome'];
 
-    // ✅ Correction : Ajout des accessoires sélectionnés au prix total
     accessoryCheckboxes.forEach(checkbox => {
         if (checkbox.checked) {
             const accessoryLabel = checkbox.closest('label').querySelector('span.accessory-name').textContent.trim();
-            const accessoryPrice = pricing['Accessories'][accessoryLabel];
+            const accessoryPrice = pricing['Accessoires'][accessoryLabel];
 
             if (accessoryPrice) {
                 console.log(`Ajout de l'accessoire : ${accessoryLabel} - Prix : ${accessoryPrice}`);

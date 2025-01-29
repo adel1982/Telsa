@@ -1,13 +1,13 @@
 export const basePrice = 52490;
 
 export const pricing = {
-    'Performance Wheels': 2500,
-    'Performance Package': 5000,
-    'Full Self-Driving': 8500,
-    'Accessories': {
-        'Center Console Trays': 35,
-        'Sunshade': 105,
-        'All-Weather Interior Liners': 225,
+    'Modèle Performance': 2500,
+    'Performance Plus': 5000,
+    'Ajouter la conduite autonome': 8500,
+    'Accessoires': {
+        'Console centrale': 35,
+        'Parasol': 105,
+        'Revêtements intérieurs toutes saisons': 225,
     }
 };
 
