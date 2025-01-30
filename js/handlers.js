@@ -39,7 +39,7 @@ const handleColorButtonClick = (event) => {
 };
 
 const updateExteriorImage = () => {
-    const performanceSuffix = selectedOptions['Performance Wheels'] ? '-performance' : '';
+    const performanceSuffix = selectedOptions['Modèle Performance'] ? '-performance' : '';
     const colorKey = exteriorImages[selectedColor] ? selectedColor : 'Stealth Grey';
 
     if (exteriorImages[colorKey]) {
@@ -57,7 +57,7 @@ const handleWheelButtonClick = (event) => {
     buttons.forEach(btn => btn.classList.remove('bg-gray-700', 'text-white'));
 
     event.target.classList.add('bg-gray-700', 'text-white');
-    selectedOptions['Performance Wheels'] = event.target.textContent.includes('Performance');
+    selectedOptions['Modèle Performance'] = event.target.textContent.includes('Performance');
 
     updateExteriorImage();
     updateTotalPrice();
@@ -67,12 +67,12 @@ const handlePerformanceButtonClick = () => {
     const isSelected = performanceBtn.classList.toggle('bg-gray-700');
     performanceBtn.classList.toggle('text-white');
 
-    selectedOptions['Performance Package'] = isSelected;
+    selectedOptions['Modèle Performance'] = isSelected;
     updateTotalPrice();
 };
 
 const fullSelfDrivingChange = () => {
-    selectedOptions['Full Self-Driving'] = fullSelfDrivingCheckbox.checked;
+    selectedOptions['Ajouter la conduite autonome'] = fullSelfDrivingCheckbox.checked;
     fullSelfDrivingCheckbox.setAttribute("aria-checked", fullSelfDrivingCheckbox.checked ? "true" : "false"); 
     updateTotalPrice();
 };

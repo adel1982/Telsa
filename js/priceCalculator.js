@@ -1,7 +1,7 @@
 import { basePrice, pricing } from './mapping.js';
 import { totalPriceElement, downPaymentElement, monthlyPaymentElement, accessoryCheckboxes } from './const.js';
 
-const formatPrice = (price) => `$${price.toLocaleString()}`;
+const formatPrice = (price) => `${price.toLocaleString()} €`;
 
 let currentPrice = basePrice;
 
